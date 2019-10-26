@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+  <div class="row justify-content-center mt-5">
+      <div class="col-lg-6">
+        <div class="card card-profile">
+          <div class="card-header"></div>
+          <div class="card-block text-xs-center">
+            <img class="card-profile-img" src="<%= userProfile.avatar %>">
+            <h5 class="card-title display-4 text-primary"><%=userProfile.username%></h5>
+            <p class="mb-4"> 
+              <div class="row">
+                <div class="col-md-6"><p class="text-big text-left ml-3">First Name:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.firstName%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Last Name:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.lastName%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Email:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.email%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Age:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.age%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Occupation:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.occupation%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Phone Number:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.phoneNumber%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Favorite Animal:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.favoriteAnimal%></p></div>
+                <div class="col-md-6"><p class="text-big text-left ml-3">Description:</p></div>
+                <div class="col-md-6"><p class="text-right text-big text-primary"><%=userProfile.description%></p></div>
+              </div>
+            <a class="btn btn-outline-primary" href="/profile/<%=userProfile.id%>/edit">Edit</a>
+          </div>
+        </div>
+      </div>
+
+
+<% include ../partials/footer %>

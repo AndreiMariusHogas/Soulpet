@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SoulPet</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap/toolkit.min.css">
+    <script src="https://kit.fontawesome.com/af56c7136d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/app.css" type="text/css">
+    
+</head>
+<body>    
+        <%if(currentUser){%>   
+            <div class="nav-item  mt-2 ml-4"><span class="text-primary">Signed in as <%=currentUser.username%></span>
+            <%if(currentUser && currentUser.isAdmin){ %>
+                <span class="text-primary">Admin <i class="fas fa-user-cog"></i></span>
+            <% } %> 
+            <% } %> 
+            </div>   
+        <div class="container">
+            <nav class="navbar navbar-expand-sm navbar-light mb-1">
+                <div class="row my-4">
+                    <div class="col-md-auto text-left">
+                        <div class="nav-item"><a href="/soulpets" class="text-primary text-nav mr-2 text-decoration-none">Home</a></div></div>
+                    <div class="col-md-auto">
+                            <ul class="navbar-nav" style="width:100%;">
+                                    <div class="row">
+                                        <% if(!currentUser){ %>
+                                            <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %> nav-item">
+                                                <a class="mr-4 text-nav text-decoration-none" href="/login">Login</a>
+                                            </li>
+                                            <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %> nav-item">
+                                                <a class="text-nav text-decoration-none" href="/register">Register</a>
+                                            </li>
+                                        <% } else { %>
+                                            <a href="/profile/<%= currentUser.id %>" class="text-primary mr-4 text-nav text-decoration-none">
+                                                Profile 
+                                            </a>
+                                            <li><a class=" text-nav text-primary text-decoration-none" href="/logout">Logout</a></li>
+                                        <% } %>
+                                    </div>
+                            </ul>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="/soulpets">
+                    <h1 class="display-2 text-primary">
+                        <i class="fas fa-paw text-warning"></i> Soul<span class="text-warning">PET</span>
+                    </h1>
+                </a> 
+            </nav>
+        </div>
+
+            <%if(error && error.length > 0){%>
+                <div class="container">
+                        <div class="alert alert-danger">
+                            <%=error%>
+                        </div>
+            <%};%>
+            <%if(success && success.length > 0){%>
+                        <div class="alert alert-success">
+                            <%=success%>
+                        </div>
+                </div>
+            <%};%>
+            <div class="container">
+    

@@ -1,0 +1,116 @@
+<% include ../partials/header %>
+
+<ul class="media-list media-list-stream mb-3 mt-5">
+                <li class="media list-group-item p-5">
+                  <div class="media-body">
+                    <div class="media-heading">
+                      <small class="float-right text-muted"><em>Submitted: <%= moment(soulpet.createdAt).fromNow() %></em></small>
+                      <h6 class="text-primary display-4"><%=soulpet.name%></h6>
+                    </div>
+                    <p class="text-dark">
+                      <strong><%=soulpet.description%></strong>
+                    </p>
+                    <img class="media-body-inline-img" src="<%=soulpet.image%>">
+                    <h4 class="text-right text-dark mx-3 my-3 d-inline">
+                                <span class=""><%=soulpet.age%> years old </span></h4>
+                    </h4>
+                    <div class="card border-0">
+                                <% if(currentUser && soulpet.author.id.equals(currentUser.id) || currentUser && currentUser.isAdmin){%>
+                                        <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                        <a  class="btn btn-warning btn-block" href="/soulpets/<%=soulpet.id%>/edit">EDIT</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                        <form action="/soulpets/<%=soulpet.id%>?_method=DELETE" method="POST">
+                                                        <div class="form-group">
+                                                                        <button class="btn btn-danger btn-block">DELETE</button>
+                                                        </div>
+                                                </form></div>
+                                        </div>
+                                        
+                                        
+                                <%};%>
+                                <div class="row">
+                                        <div class="col-md-6">
+                                             
+                                        </div>
+                                        <div class="col md-6"><div>
+                                                        <a class="btn btn-primary btn-block" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+                                                          <span aria-hidden="true"><i class="fas fa-plus"></i></span> Add new comment</a>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="collapse" id="collapseComment">
+                                        <div class="card border border-primary">
+                                            <% if(!currentUser) { %>
+                                                <h5 class="text-danger m-2">You need to login before you can comment. <a href="/login">Click here</a> to go to the login page.</h5>
+                                                <% } %>
+                                                <% if(currentUser) { %>
+                                                        <h4 class="text-primary m-3">Write your comment <span aria-hidden="true"><i class="fas fa-pencil-alt text-warning"></i></span></h4>
+                                                        <form class="m-3" id="add-comment-form" action="/soulpets/<%= soulpet._id %>/comments" method="POST">
+                                                          <div class="form-group">
+                                                            <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                                                          </div>
+                                                          <div class="form-group">
+                                                            <textarea class="form-control" name="comment[text]" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70"></textarea>
+                                                          </div>
+                                                          <div class="form-group">
+                                                            <button class="btn btn-primary btn-sm ml-3">Comment <span aria-hidden="true"><i class="fas fa-comment"></i></span></button>
+                                                          </div>
+                                                        </form>    
+                                                        <% } %>
+                                                </div>
+                                        </div>
+                                
+                                        <hr>   
+                                        <% if (soulpet.comments.length === 0) { %>
+                                                <em style="color: grey;">No comments yet.</em>
+                                                  <% } %> 
+                                        <ul class="media-list mt-5">
+                                        <% soulpet.comments.forEach(function(comment) { %>
+                                                <li class="media ">
+                                                <div class="media-body">
+                                                        <div class="row">
+                                                                <div class="col-md-9 text-primary text-big"><strong><%=comment.author.username%> </strong></div>
+                                                                <div class="col-md-3 text-right"><small><%= moment(comment.createdAt).fromNow() %></small></div>
+                                                        </div>
+                                                <p><%= comment.text %></p>
+                                                <% if (currentUser && currentUser._id.equals(comment.author.id)) { %>
+                                                                <!--Edit-->
+                                                                <a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
+                                                                        Edit</a>
+                                                                <!--Delete-->
+                                                                <form id="delete-form" action="/soulpets/<%= soulpet._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                                                        <button class="btn btn-xs btn-danger">Delete</button>
+                                                                </form>
+                                                                <div class="collapse" id="collapseEdit<%= comment._id %>">
+                                                                        <div class="card border-0 mt-3" >
+                                                                        <h4 class="text-primary p-3">Edit your comment <span aria-hidden="true"><i class="fas fa-edit text-warning"></i></span></h4>
+                                                                        <form id="edit-comment-form<%= comment._id %>" action="/soulpets/<%= soulpet._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                                                                        <div class="form-group">
+                                                                        <input class="form-control p-3" type="text" disabled value="<%= currentUser.username %>">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                        <textarea class="form-control p-3" name="comment[text]" placeholder="Your comment text..." form="edit-comment-form<%= comment._id %>" rows="5" cols="70"><%= comment.text %></textarea>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                        <button class="btn btn-warning btn-sm m-3">Edit comment <span aria-hidden="true"><i class="fas fa-comment"></i></span></button>
+                                                                        </div>
+                                                                        </form>
+                                                                        </div>
+                                                                </div>
+                                                                        <% } %>
+                                                                <hr id="commentDivider">
+                                                                <% }) %>
+                                                </div>
+                                        </li>
+                                        </ul>
+                  </div>
+                </li>
+              </ul>
+
+
+                               
+
+
+<% include ../partials/footer%>

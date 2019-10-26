@@ -1,0 +1,63 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row justify-content-around flex-fill">
+        <div class="col-md-8">
+            <form action="/profile/<%=userProfile.id%>/?_method=PUT" method="POST" style="max-width:100%">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input class="form-control" type="text" name="username" value="<%=userProfile.username%>">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<%=userProfile.firstName%>">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name: </label>
+                    <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<%=userProfile.lastName%>">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="avatar">Email:</label>
+                    <input class="form-control" type="email" name="email" placeholder="Email" value="<%=userProfile.email%>">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="avatar">Avatar:</label>
+                    <input class="form-control" type="text" name="avatar" placeholder="Avatar URL" >
+                    
+                </div>
+                <div class="form-group">
+                    <label for="age">Age: </label>
+                    <input class="form-control" type="number" name="age" placeholder="Age" value="<%=userProfile.age%>">
+                   
+                </div>
+                <div class="form-group">
+                    <label for="occupation">Occupation:</label>
+                    <input class="form-control" type="text" name="occupation" placeholder="Occupation" value="<%=userProfile.occupation%>">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input class="form-control" type="number" name="phoneNumber" placeholder="Phone Number" value="<%=userProfile.phoneNumber%>">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="favoriteAnimal">Favorite Animal:</label>
+                    <input class="form-control" type="text" name="favoriteAnimal" placeholder="Favorite Animal" value="<%=userProfile.favoriteAnimal%>">
+                    
+                </div>
+                <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" rows="5" name="description" placeholder="Description"><%=userProfile.description%></textarea>
+                      </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Save</button>
+                </div>
+        </form></div>
+    </div>
+
+</div>  
+
+<% include ../partials/footer %>

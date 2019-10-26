@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SoulPet</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap/toolkit.min.css">
+    <script src="https://kit.fontawesome.com/af56c7136d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/app.css" type="text/css">
+    
+</head>
+<body>
+        <%if(currentUser){%>   
+            <div class="nav-item  mt-2 ml-4"><span class="text-primary">Signed in as <%=currentUser.username%></span>
+            <%if(currentUser && currentUser.isAdmin){ %>
+                <span class="text-primary">Admin <i class="fas fa-user-cog"></i></span>
+            <% } %> 
+            <% } %> 
+            </div>      
+    <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-light mb-1">
+            <div class="row justify-content-between">
+                <div class="col-md-auto text-left">
+                    <div class="nav-item"><a href="/soulpets" class="text-primary text-nav mr-2 text-decoration-none d-none d-md-block">Home</a></div></div>
+                <div class="col-md-auto">
+                        <ul class="navbar-nav" style="width:100%;">
+                                <div class="row ">
+                                    <% if(!currentUser){ %>
+                                        <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %> nav-item">
+                                            <a class="mr-4 text-nav text-decoration-none" href="/login">Login</a>
+                                        </li>
+                                        <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %> nav-item">
+                                            <a class="text-nav text-decoration-none" href="/register">Register</a>
+                                        </li>
+                                    <% } else { %>
+                                        <a href="/profile/<%= currentUser.id %>" class="text-primary mr-4 text-nav text-decoration-none">
+                                        Profile 
+                                        </a>
+                                        <li><a class=" text-nav text-primary text-decoration-none" href="/logout">Logout</a></li>
+                                    <% } %>
+                                </div>
+                        </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="jumbotron jumbotron-fluid" style="background-color:rgba(0,0,0,0)">
+            <div class="container">
+              <h1 class="display-2 text-center text-primary">Welcome to <i class="fas fa-paw text-warning"></i> Soul<span class="text-warning">PET</span></h1>
+              <hr>
+              <p class="lead text-center text-primary">Find the pet that fits your soul</p>
+              <div class="row ">
+                  <div class="col-md-6 text-right"><a class="btn btn-primary" href="/soulpets/new">Add New soulpet</a></div>
+                  <div class="col-md-6 ">
+                        <form class="form-inline" action="/soulpets" method="GET">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="search" placeholder="Search for your SoulPet">
+                                <input class="btn btn-primary d-block d-sm-inline" type="submit" value="Search">
+                            </div>
+                        </form>
+                  </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="row" >
+            <% soulpets.forEach(function(soulpet){ %>
+                <div class="col-md-3 col-sm-6 ">
+                        <div class="card text-center m-2">
+                                <div class="card-body ">
+                                    <img src="<%= soulpet.image %>"class="card-img" alt="..."> 
+                                    <h5 class="card-title text-primary mt-2"><%= soulpet.name %></h5>
+                                    <hr>
+                                    <p class="card-text"><%=soulpet.description.substring(0,50)%>...</p>
+                                    <a href="soulpets/<%= soulpet._id %>" class="btn btn-primary ">More Info</a>
+                                </div>
+                              </div>
+                </div>
+            <% }); %>
+    </div>
+
+    
+<nav  class="mt-2" aria-label="Page navigation">
+    <% if (pages && pages > 0) { %>
+    <ul class="pagination justify-content-center">
+        <% if (current == 1) { %>
+        <li class="page-item disabled"><a class="page-link">First</a></li>
+        <% } else { %>
+        <li><a class="page-link" href="/soulpets<%if(search){%>?search=<%=search%><%}%>">First</a></li>
+        <% } %>
+ 
+        <% if (current == 1) { %>
+        <li class="page-item disabled"><a class="page-link">«</a></li>
+        <% } else { %>
+        <li><a class="page-link" href="/soulpets?page=<%= Number(current) - 1 %><%if(search){%>&search=<%=search%><%}%>">«</a></li>
+        <% } %>
+ 
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1) { %>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+        <% if (i == current) { %>
+        <li class="active"><a class="page-link"><%= i %></a></li>
+        <% } else { %>
+        <li><a class="page-link" href="/soulpets?page=<%= i %><%if(search){%>&search=<%=search%><%}%>"><%= i %></a></li>
+        <% } %>
+        <% if (i == Number(current) + 4 && i < pages) { %>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        <% } %>
+        <% } %>
+ 
+        <% if (current == pages) { %>
+        <li class="page-item disabled"><a class="page-link">»</a></li>
+        <% } else { %>
+        <li><a class="page-link" href="/soulpets?page=<%= Number(current) + 1 %><%if(search){%>&search=<%=search%><%}%>">»</a></li>
+        <% } %>
+ 
+        <% if (current == pages) { %>
+        <li class="page-item disabled"><a class="page-link">Last</a></li>
+        <% } else { %>
+        <li><a class="page-link" href="/soulpets?page=<%= pages %><%if(search){%>&search=<%=search%><%}%>">Last</a></li>
+        <% } %>
+    </ul>
+    <% } %>
+</nav>
+
+<% include ../partials/footer%>
