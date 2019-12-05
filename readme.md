@@ -20,12 +20,13 @@ v10.16.3</em></p>
 <p>npm install passport --save</p>
 <p>npm install passport-local --save</p>
 <p>npm install passport-local-mongoose --save</p>
-<h5>Or the one line command:</h5>
+<h3>Or the one line command:</h3>
 <p>npm install express body-parser connect-flash ejs express-session method-override moment mongoose passport passport-local passport-local-mongoose</p>
 <br>
-<h5>Check for versions in package.json</h5>
-<h5>Check for deprecation settings</h5>
-<h5>Download or Clone this repository</h5>
+<h3>Check for versions in package.json</h3>
+<h3>Check for deprecation settings</h3>
+<h3>Download or Clone this repository</h3>
+<br>
 <h3>Run the app by using <em>node app.js</em> in your command line</h3>
 <br>
 <h2>Built With:</h2>
@@ -37,5 +38,5 @@ v10.16.3</em></p>
     <li>NodeJS -- https://nodejs.org/en/</li>
     <li>ExpressJS -- https://expressjs.com/</li>
     <li>MongoDB -- https://www.mongodb.com/</li>
-<ul>
+</ul>
 <p>For more details on the packages/dependencies visit https://www.npmjs.com/</p>
